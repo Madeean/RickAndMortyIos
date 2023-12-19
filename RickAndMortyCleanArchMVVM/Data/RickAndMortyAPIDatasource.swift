@@ -7,8 +7,8 @@
 
 import Foundation
 class RickAndMortyAPIDatasource: RickAndMortyDatasource {
-    func getListRickAndMorty() async throws -> RickAndMortyResponseModel {
-        let url = URL(string: "https://rickandmortyapi.com/api/character")!
+    func getListRickAndMorty(page:Int) async throws -> RickAndMortyResponseModel {
+        let url = URL(string: "https://rickandmortyapi.com/api/character?page=\(page)")!
         let session = URLSession(configuration: .default)
 
         let (data, _) = try await session.data(from: url)

@@ -7,7 +7,8 @@
 
 import Foundation
 class ListViewModel: ObservableObject {
-    @Published var dataListRickAndMorty: RickAndMortyModel = RickAndMortyModel(results: [])
+    @Published var dataListRickAndMorty: [CharacterModel] = []
+    @Published var isLoading = false
 
     private let usecase: RickAndMortyUsecase
 
@@ -15,12 +16,18 @@ class ListViewModel: ObservableObject {
         self.usecase = usecase
     }
 
-    func getListRickAndMorty() async {
+    func getListRickAndMorty(page: Int) async {
+        isLoading = true
         do {
-            let data = try await usecase.getListRickAndMorty()
-            self.dataListRickAndMorty = data
+            let data = try await usecase.getListRickAndMorty(page: page)
+            isLoading = false
+            self.dataListRickAndMorty.append(contentsOf: data.results)
         } catch {
+            isLoading = false
             print(error)
         }
     }
-}
+
+    func shouldLoadData(id: Int) -> Bool {
+        return id == dataListRickAndMorty.count - 2
+    }}

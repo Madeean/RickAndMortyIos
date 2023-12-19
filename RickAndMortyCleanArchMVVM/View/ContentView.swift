@@ -9,19 +9,37 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct ContentView: View {
-    @ObservedObject var viewModel = ListViewModel()
+    @ObservedObject private var viewModel = ListViewModel()
+    @State private var page:Int = 1
 
     var body: some View {
         NavigationView {
-            List(viewModel.dataListRickAndMorty.results, id: \.id) { character in
-                ItemListImageAndName(item: character)
-            }.listStyle(.plain)
-                .navigationTitle("Rick and Morty Characters")
+            ZStack{
+                List(viewModel.dataListRickAndMorty, id: \.id) { character in
+                    ItemListImageAndName(item: character).onAppear{
+                        if viewModel.shouldLoadData(id: character.id) {
+                            page += 1
+                            Task{
+                                await viewModel.getListRickAndMorty(page:page)
+                            }
+                        }
+                    }
+                }.listStyle(.plain)
+                    .navigationTitle("Rick and Morty Characters")
+                
+                if viewModel.isLoading {
+                    VStack{
+                        indicatorView()
+                        Text("please wait")
+                    }.padding().background(.white).cornerRadius(20).shadow(color: .secondary, radius: 20)
+                }
+            }
+        
         }
         .onAppear {
             // Call the function to fetch data when the view appears
             Task {
-                await viewModel.getListRickAndMorty()
+                await viewModel.getListRickAndMorty(page: 1)
             }
         }
     }
@@ -48,6 +66,18 @@ struct ItemListImageAndName: View {
                                  maxWidth: .infinity,
                                  minHeight: 0,
                                  maxHeight: .infinity)
+    }
+}
+
+struct indicatorView: UIViewRepresentable{
+    func makeUIView(context: Context) -> UIActivityIndicatorView {
+        let indi = UIActivityIndicatorView(style: .large)
+        indi.color = UIColor.red
+        return indi
+    }
+    
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: Context) {
+        uiView.startAnimating()
     }
 }
 

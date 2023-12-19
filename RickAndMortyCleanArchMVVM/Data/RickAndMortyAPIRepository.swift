@@ -13,9 +13,9 @@ class RickAndMortyAPIRepository: RickAndMortyRepository {
         self.datasource = datasource
     }
 
-    func getListRickAndMorty() async throws -> RickAndMortyModel {
+    func getListRickAndMorty(page:Int) async throws -> RickAndMortyModel {
         
-        let rawData = try await datasource.getListRickAndMorty()
+        let rawData = try await datasource.getListRickAndMorty(page: page)
         let data = RickAndMortyResponseModel.transforms(model: rawData)
         
         return data
