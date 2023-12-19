@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80650ED62B318C1700B09E3B /* RickAndMortyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80650ED52B318C1700B09E3B /* RickAndMortyModel.swift */; };
+		80650ED92B31952500B09E3B /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 80650ED82B31952500B09E3B /* SDWebImageSwiftUI */; };
 		808784BB2B316F9000A78D17 /* RickAndMortyCleanArchMVVMApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784BA2B316F9000A78D17 /* RickAndMortyCleanArchMVVMApp.swift */; };
 		808784BD2B316F9000A78D17 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784BC2B316F9000A78D17 /* ContentView.swift */; };
 		808784BF2B316F9100A78D17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 808784BE2B316F9100A78D17 /* Assets.xcassets */; };
 		808784C22B316F9100A78D17 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 808784C12B316F9100A78D17 /* Preview Assets.xcassets */; };
 		808784CD2B31700200A78D17 /* RickAndMortyAPIDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784CC2B31700200A78D17 /* RickAndMortyAPIDatasource.swift */; };
-		808784CF2B31703300A78D17 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784CE2B31703300A78D17 /* Character.swift */; };
 		808784D12B31705400A78D17 /* RickAndMortyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784D02B31705400A78D17 /* RickAndMortyResponseModel.swift */; };
 		808784D32B3170F500A78D17 /* RickAndMortyDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784D22B3170F500A78D17 /* RickAndMortyDataSource.swift */; };
 		808784D52B31712300A78D17 /* RickAndMortyAPIRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808784D42B31712300A78D17 /* RickAndMortyAPIRepository.swift */; };
@@ -22,13 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80650ED52B318C1700B09E3B /* RickAndMortyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyModel.swift; sourceTree = "<group>"; };
 		808784B72B316F9000A78D17 /* RickAndMortyCleanArchMVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMortyCleanArchMVVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		808784BA2B316F9000A78D17 /* RickAndMortyCleanArchMVVMApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyCleanArchMVVMApp.swift; sourceTree = "<group>"; };
 		808784BC2B316F9000A78D17 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		808784BE2B316F9100A78D17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		808784C12B316F9100A78D17 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		808784CC2B31700200A78D17 /* RickAndMortyAPIDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyAPIDatasource.swift; sourceTree = "<group>"; };
-		808784CE2B31703300A78D17 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		808784D02B31705400A78D17 /* RickAndMortyResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyResponseModel.swift; sourceTree = "<group>"; };
 		808784D22B3170F500A78D17 /* RickAndMortyDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyDataSource.swift; sourceTree = "<group>"; };
 		808784D42B31712300A78D17 /* RickAndMortyAPIRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyAPIRepository.swift; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80650ED92B31952500B09E3B /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,7 +53,6 @@
 		80650ED32B31772200B09E3B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				808784CE2B31703300A78D17 /* Character.swift */,
 				808784D02B31705400A78D17 /* RickAndMortyResponseModel.swift */,
 			);
 			path = Model;
@@ -60,6 +61,7 @@
 		80650ED42B31772900B09E3B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				80650ED52B318C1700B09E3B /* RickAndMortyModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -147,6 +149,9 @@
 			dependencies = (
 			);
 			name = RickAndMortyCleanArchMVVM;
+			packageProductDependencies = (
+				80650ED82B31952500B09E3B /* SDWebImageSwiftUI */,
+			);
 			productName = RickAndMortyCleanArchMVVM;
 			productReference = 808784B72B316F9000A78D17 /* RickAndMortyCleanArchMVVM.app */;
 			productType = "com.apple.product-type.application";
@@ -175,6 +180,9 @@
 				Base,
 			);
 			mainGroup = 808784AE2B316F9000A78D17;
+			packageReferences = (
+				80650ED72B31952500B09E3B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			productRefGroup = 808784B82B316F9000A78D17 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -201,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80650ED62B318C1700B09E3B /* RickAndMortyModel.swift in Sources */,
 				808784DB2B31721500A78D17 /* ListViewModel.swift in Sources */,
 				808784D12B31705400A78D17 /* RickAndMortyResponseModel.swift in Sources */,
 				808784BD2B316F9000A78D17 /* ContentView.swift in Sources */,
@@ -210,7 +219,6 @@
 				808784D52B31712300A78D17 /* RickAndMortyAPIRepository.swift in Sources */,
 				808784D72B3171AD00A78D17 /* RickAndMortyRepository.swift in Sources */,
 				808784D92B3171C400A78D17 /* RickAndMortyUsecase.swift in Sources */,
-				808784CF2B31703300A78D17 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +422,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		80650ED72B31952500B09E3B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		80650ED82B31952500B09E3B /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80650ED72B31952500B09E3B /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 808784AF2B316F9000A78D17 /* Project object */;
 }

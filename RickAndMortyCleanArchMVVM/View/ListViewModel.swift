@@ -7,7 +7,7 @@
 
 import Foundation
 class ListViewModel: ObservableObject {
-    @Published var dataListRickAndMorty: [Character] = []
+    @Published var dataListRickAndMorty: RickAndMortyModel = RickAndMortyModel(results: [])
 
     private let usecase: RickAndMortyUsecase
 

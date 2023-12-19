@@ -7,7 +7,7 @@
 
 import Foundation
 class RickAndMortyAPIDatasource: RickAndMortyDatasource {
-    func getListRickAndMorty() async throws -> [Character] {
+    func getListRickAndMorty() async throws -> RickAndMortyResponseModel {
         let url = URL(string: "https://rickandmortyapi.com/api/character")!
         let session = URLSession(configuration: .default)
 
@@ -17,6 +17,6 @@ class RickAndMortyAPIDatasource: RickAndMortyDatasource {
         let response = try decoder.decode(RickAndMortyResponseModel.self, from: data)
         let listData = response.results
 
-        return listData
+        return RickAndMortyResponseModel(results: listData)
     }
 }

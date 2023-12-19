@@ -7,5 +7,5 @@
 
 import Foundation
 protocol RickAndMortyDatasource {
-    func getListRickAndMorty() async throws -> [Character]
+    func getListRickAndMorty() async throws -> RickAndMortyResponseModel
 }

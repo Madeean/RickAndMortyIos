@@ -13,7 +13,7 @@ class RickAndMortyUsecase {
         self.repository = repository
     }
 
-    func getListRickAndMorty() async throws -> [Character] {
+    func getListRickAndMorty() async throws -> RickAndMortyModel {
         return try await repository.getListRickAndMorty()
     }
 }
