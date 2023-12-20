@@ -21,7 +21,7 @@ class ListViewModel: ObservableObject {
         do {
             let data = try await usecase.getListRickAndMorty(page: page)
             isLoading = false
-            self.dataListRickAndMorty.append(contentsOf: data.results)
+            dataListRickAndMorty.append(contentsOf: data.results)
         } catch {
             isLoading = false
             print(error)
@@ -30,4 +30,18 @@ class ListViewModel: ObservableObject {
 
     func shouldLoadData(id: Int) -> Bool {
         return id == dataListRickAndMorty.count - 2
-    }}
+    }
+    
+    func getSearchEpisode(name:String, page:Int) async {
+        isLoading = true
+        dataListRickAndMorty = []
+        do{
+            let data = try await usecase.getSearchCharacter(name: name, page: page)
+            isLoading = false
+            dataListRickAndMorty.append(contentsOf: data.results)
+        } catch {
+            isLoading = false
+            print(error)
+        }
+    }
+}
