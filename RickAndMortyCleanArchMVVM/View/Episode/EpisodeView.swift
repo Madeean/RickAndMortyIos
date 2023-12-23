@@ -81,11 +81,10 @@ private struct ItemEpisodeList: View {
                     Text(item.air_date)
                 }
                 Spacer()
-                Button {
-                    print("episode button")
-                } label: {
-                    Text("Detail")
-                }.padding().background(.blue).foregroundColor(.white).cornerRadius(20)
+                
+                Text("Detail").padding().background(.blue).foregroundColor(.white).cornerRadius(20).onTapGesture {
+                    print("episode press")
+                }
             }.padding().background(.backgroundList)
         }.cornerRadius(20)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)

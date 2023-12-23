@@ -7,6 +7,19 @@
 
 import Foundation
 class RickAndMortyAPIDatasource: RickAndMortyDatasource {
+    func getSearchLocation(name: String, page: Int) async throws -> LocationRickAndMortyResponseModel {
+        let url = URL(string: "https://rickandmortyapi.com/api/location?name=\(name)&page=\(page)")!
+        let session = URLSession(configuration: .default)
+
+        let (data, _) = try await session.data(from: url)
+
+        let decoder = JSONDecoder()
+        let response = try decoder.decode(LocationRickAndMortyResponseModel.self, from: data)
+        let listData = response.results
+
+        return LocationRickAndMortyResponseModel(results: listData)
+    }
+    
     func getSearchCharacter(name: String, page: Int) async throws -> RickAndMortyResponseModel {
         let url = URL(string: "https://rickandmortyapi.com/api/character?name=\(name)&page=\(page)")!
         let session = URLSession(configuration: .default)

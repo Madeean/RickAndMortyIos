@@ -10,19 +10,39 @@ import SwiftUI
 struct LocationView: View {
     @ObservedObject private var viewModel = LocationViewModel()
     @State private var page: Int = 1
+    @State private var searchLocation: String = ""
+    @State private var isSearchMode: Bool = false
     var body: some View {
         NavigationView {
             ZStack {
-                List(viewModel.locationListRickAndMorty, id: \.id) { character in
-                    ItemEpisodeList(item: character).listRowSeparator(.hidden).onAppear {
-                        if viewModel.shouldLoadData(id: character.id) {
-                            page += 1
-                            Task {
-                                await viewModel.getListEpisode(page: page)
+                VStack{
+                    
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        TextField("Search Location...", text: $searchLocation).onSubmit {
+                            page = 1
+                            Task{
+                                await viewModel.getSearchLocation(name:searchLocation, page:page)
                             }
                         }
                     }
-                }.listStyle(.plain)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 18.0).fill(.backgroundList).strokeBorder(.black, style: StrokeStyle(lineWidth: 1.0)))
+                    .autocapitalization(.none)
+                    .keyboardType(.emailAddress)
+                    .padding(.horizontal, 20)
+                    
+                    List(viewModel.locationListRickAndMorty, id: \.id) { character in
+                        ItemEpisodeList(item: character).listRowSeparator(.hidden).onAppear {
+                            if viewModel.shouldLoadData(id: character.id) {
+                                page += 1
+                                Task {
+                                    await viewModel.getListEpisode(page: page)
+                                }
+                            }
+                        }
+                    }.listStyle(.plain)
+                }
 
                 if viewModel.isLoading {
                     VStack {

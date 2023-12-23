@@ -13,4 +13,5 @@ protocol RickAndMortyRepository {
     
     func getSearchEpisode(name:String, page:Int) async throws -> EpisodeRickAndMortyModel
     func getSearchCharacter(name:String, page:Int) async throws -> RickAndMortyModel
+    func getSearchLocation(name:String, page:Int) async throws -> LocationRickAndMortyModel
 }

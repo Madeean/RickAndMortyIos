@@ -31,4 +31,17 @@ class LocationViewModel: ObservableObject{
     func shouldLoadData(id: Int) -> Bool {
         return id == locationListRickAndMorty.count - 2
     }
+    
+    func getSearchLocation(name:String, page:Int) async {
+        isLoading = true
+        locationListRickAndMorty = []
+        do{
+            let data = try await usecase.getSearchLocation(name: name, page: page)
+            isLoading = false
+            locationListRickAndMorty.append(contentsOf: data.results)
+        } catch {
+            isLoading = false
+            print(error)
+        }
+    }
 }

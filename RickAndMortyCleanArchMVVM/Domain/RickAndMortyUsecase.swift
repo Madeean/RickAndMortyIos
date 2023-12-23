@@ -33,4 +33,8 @@ class RickAndMortyUsecase {
         return try await repository.getSearchCharacter(name: name, page: page)
     }
     
+    func getSearchLocation(name:String, page:Int) async throws -> LocationRickAndMortyModel{
+        return try await repository.getSearchLocation(name: name, page: page)
+    }
+    
 }

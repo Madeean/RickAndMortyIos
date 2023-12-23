@@ -8,6 +8,8 @@
 import Foundation
 class RickAndMortyAPIRepository: RickAndMortyRepository {
 
+    
+
     private let datasource: RickAndMortyAPIDatasource
 
     init(datasource: RickAndMortyAPIDatasource = RickAndMortyAPIDatasource()) {
@@ -47,6 +49,13 @@ class RickAndMortyAPIRepository: RickAndMortyRepository {
     func getSearchCharacter(name: String, page: Int) async throws -> RickAndMortyModel {
         let rawData = try await datasource.getSearchCharacter(name: name, page: page)
         let data = RickAndMortyResponseModel.transforms(model: rawData)
+        
+        return data
+    }
+    
+    func getSearchLocation(name: String, page: Int) async throws -> LocationRickAndMortyModel {
+        let rawData = try await datasource.getSearchLocation(name: name, page: page)
+        let data  = LocationRickAndMortyResponseModel.transforms(model: rawData)
         
         return data
     }
