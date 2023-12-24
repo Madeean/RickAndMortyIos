@@ -12,7 +12,6 @@ struct EpisodeView: View {
     @ObservedObject private var viewModel = EpisodeViewModel()
     @State private var page: Int = 1
     @State private var searchEpisode: String = ""
-    @State private var isSearchMode: Bool = false
 
     var body: some View {
         NavigationView {
@@ -21,9 +20,10 @@ struct EpisodeView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                         TextField("Search Episode...", text: $searchEpisode).onSubmit {
+                            viewModel.episodeListRickAndMorty = []
                             page = 1
-                            Task{
-                                await viewModel.getSearchEpisode(name:searchEpisode, page:page)
+                            Task {
+                                await viewModel.getSearchEpisode(name: searchEpisode, page: page)
                             }
                         }
                     }
@@ -33,17 +33,26 @@ struct EpisodeView: View {
                     .keyboardType(.emailAddress)
                     .padding(.horizontal, 20)
 
-                    List(viewModel.episodeListRickAndMorty, id: \.id) { character in
-                        ItemEpisodeList(item: character)
-                            .listRowSeparator(.hidden)
-                            .onAppear {
-                                if viewModel.shouldLoadData(id: character.id) {
-                                    page += 1
-                                    Task {
-                                        await viewModel.getListEpisode(page: page)
+                    List {
+                        ForEach(Array(viewModel.episodeListRickAndMorty.enumerated()), id: \.offset) {index, character in
+                            ItemEpisodeList(item: character)
+                                .listRowSeparator(.hidden)
+                                .onAppear {
+                                    if !viewModel.stopLoad {
+                                        if viewModel.shouldLoadData(id: index) {
+                                            page += 1
+                                            Task {
+                                                if viewModel.isSearchMode {
+                                                    await viewModel.getSearchEpisode(name: searchEpisode, page: page)
+                                                } else {
+                                                    await viewModel.getListEpisode(page: page)
+                                                }
+                                            }
+                                        }
                                     }
                                 }
-                            }
+                            
+                        }
                     }
                     .listStyle(.plain)
                 }
@@ -81,7 +90,7 @@ private struct ItemEpisodeList: View {
                     Text(item.air_date)
                 }
                 Spacer()
-                
+
                 Text("Detail").padding().background(.blue).foregroundColor(.white).cornerRadius(20).onTapGesture {
                     print("episode press")
                 }

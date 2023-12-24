@@ -9,6 +9,8 @@ import Foundation
 class LocationViewModel: ObservableObject{
     @Published var locationListRickAndMorty: [LocationModel] = []
     @Published var isLoading = false
+    @Published var isSearchMode = false
+    @Published var stopLoad = false
 
     private let usecase: RickAndMortyUsecase
 
@@ -16,13 +18,16 @@ class LocationViewModel: ObservableObject{
         self.usecase = usecase
     }
 
-    func getListEpisode(page: Int) async {
+    @MainActor func getListEpisode(page: Int) async {
+        stopLoad = false
+        isSearchMode = false
         isLoading = true
         do {
             let data = try await usecase.getLocationRickAndMorty(page: page)
             isLoading = false
             locationListRickAndMorty.append(contentsOf: data.results)
         } catch {
+            stopLoad = true
             isLoading = false
             print(error)
         }
@@ -32,15 +37,23 @@ class LocationViewModel: ObservableObject{
         return id == locationListRickAndMorty.count - 2
     }
     
-    func getSearchLocation(name:String, page:Int) async {
+    @MainActor func getSearchLocation(name:String, page:Int) async {
+        stopLoad = false
+        isSearchMode = true
         isLoading = true
-        locationListRickAndMorty = []
         do{
             let data = try await usecase.getSearchLocation(name: name, page: page)
             isLoading = false
-            locationListRickAndMorty.append(contentsOf: data.results)
+            if(data.results.isEmpty){
+                stopLoad = true
+                print("iesmpty")
+            }else{
+                print("isnotempty")
+                locationListRickAndMorty.append(contentsOf: data.results)
+            }
         } catch {
             isLoading = false
+            stopLoad = true
             print(error)
         }
     }

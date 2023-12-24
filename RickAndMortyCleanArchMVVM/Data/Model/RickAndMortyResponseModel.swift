@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum RickAndMortyError: Error {
+    case emptyData
+}
+
 //Character
 struct RickAndMortyResponseModel : Codable {
     public var results: [CharacterResponseModel]

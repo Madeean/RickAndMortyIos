@@ -11,7 +11,6 @@ struct LocationView: View {
     @ObservedObject private var viewModel = LocationViewModel()
     @State private var page: Int = 1
     @State private var searchLocation: String = ""
-    @State private var isSearchMode: Bool = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -20,6 +19,7 @@ struct LocationView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                         TextField("Search Location...", text: $searchLocation).onSubmit {
+                            viewModel.locationListRickAndMorty = []
                             page = 1
                             Task{
                                 await viewModel.getSearchLocation(name:searchLocation, page:page)
@@ -32,15 +32,37 @@ struct LocationView: View {
                     .keyboardType(.emailAddress)
                     .padding(.horizontal, 20)
                     
-                    List(viewModel.locationListRickAndMorty, id: \.id) { character in
-                        ItemEpisodeList(item: character).listRowSeparator(.hidden).onAppear {
-                            if viewModel.shouldLoadData(id: character.id) {
-                                page += 1
-                                Task {
-                                    await viewModel.getListEpisode(page: page)
+                    List() {
+                        
+                        ForEach(Array(viewModel.locationListRickAndMorty.enumerated()), id:\.offset){
+                            index, location in
+                            
+                            ItemLocationList(item: location).listRowSeparator(.hidden).onAppear {
+                                
+                                if !viewModel.stopLoad {
+                                    
+                                    if viewModel.shouldLoadData(id: index) {
+                                        
+                                        page += 1
+                                        
+                                        Task{
+                                            if viewModel.isSearchMode {
+                                                
+                                                await viewModel.getSearchLocation(name: searchLocation, page: page)
+                                                
+                                            } else{
+                                                await viewModel.getListEpisode(page:page)
+                                            }
+                                        }
+                                        
+                                    }
+                                    
                                 }
+                                
                             }
+                            
                         }
+                        
                     }.listStyle(.plain)
                 }
 
@@ -61,7 +83,7 @@ struct LocationView: View {
     }
 }
 
-private struct ItemEpisodeList: View {
+private struct ItemLocationList: View {
     var item: LocationModel
     var body: some View {
         ZStack {
@@ -72,11 +94,9 @@ private struct ItemEpisodeList: View {
                     Text(item.dimension)
                 }
                 Spacer()
-                Button {
-                    print("location button")
-                } label: {
-                    Text("Detail")
-                }.padding().background(.blue).foregroundColor(.white).cornerRadius(20)
+                Text("Detail").padding().background(.blue).foregroundColor(.white).cornerRadius(20).onTapGesture {
+                    print("episode press")
+                }
             }.padding().background(.backgroundList)
         }.cornerRadius(20)
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)

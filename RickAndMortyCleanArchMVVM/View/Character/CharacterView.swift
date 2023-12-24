@@ -11,7 +11,6 @@ struct CharacterView: View {
     @ObservedObject private var viewModel = ListViewModel()
     @State private var page: Int = 1
     @State private var searchCharacter: String = ""
-    @State private var isSearchMode: Bool = false
     var body: some View {
         NavigationView {
             ZStack {
@@ -21,6 +20,7 @@ struct CharacterView: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                         TextField("Search Character...", text: $searchCharacter).onSubmit {
+                            viewModel.dataListRickAndMorty = []
                             page = 1
                             Task{
                                 await viewModel.getSearchEpisode(name:searchCharacter   ,page:page)
@@ -36,15 +36,24 @@ struct CharacterView: View {
                     
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-                            ForEach(viewModel.dataListRickAndMorty, id: \.self) { character in
+                            ForEach(Array(viewModel.dataListRickAndMorty.enumerated()), id: \.offset) {index, character in
                                 
                                 characterItemView(item: character).padding(.bottom, 10).padding(.horizontal, 8).onAppear {
-                                    if viewModel.shouldLoadData(id: character.id) {
-                                        page += 1
-                                        Task {
-                                            await viewModel.getListRickAndMorty(page: page)
+                                    if !viewModel.stopLoad{
+                                        if viewModel.shouldLoadData(id: index) {
+                                            page += 1
+                                            Task {
+                                                
+                                                if viewModel.isSearchMode {
+                                                    print("SearchMode \(searchCharacter) - page \(page)")
+                                                    await viewModel.getSearchEpisode(name: searchCharacter, page: page)
+                                                }else{
+                                                    await viewModel.getListRickAndMorty(page: page)
+                                                }
+                                            }
                                         }
-                                    }
+                                        
+                                    } // stopload
                                 }
                             }
                         }

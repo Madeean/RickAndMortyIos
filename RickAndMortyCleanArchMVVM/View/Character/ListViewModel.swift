@@ -9,6 +9,8 @@ import Foundation
 class ListViewModel: ObservableObject {
     @Published var dataListRickAndMorty: [CharacterModel] = []
     @Published var isLoading = false
+    @Published var isSearchMode = false
+    @Published var stopLoad = false
 
     private let usecase: RickAndMortyUsecase
 
@@ -16,7 +18,9 @@ class ListViewModel: ObservableObject {
         self.usecase = usecase
     }
 
-    func getListRickAndMorty(page: Int) async {
+    @MainActor func getListRickAndMorty(page: Int) async {
+        stopLoad = false
+        isSearchMode = false
         isLoading = true
         do {
             let data = try await usecase.getListRickAndMorty(page: page)
@@ -24,6 +28,7 @@ class ListViewModel: ObservableObject {
             dataListRickAndMorty.append(contentsOf: data.results)
         } catch {
             isLoading = false
+            stopLoad = true
             print(error)
         }
     }
@@ -32,15 +37,23 @@ class ListViewModel: ObservableObject {
         return id == dataListRickAndMorty.count - 2
     }
     
-    func getSearchEpisode(name:String, page:Int) async {
+    @MainActor func getSearchEpisode(name:String, page:Int) async {
+        stopLoad = false
+        isSearchMode = true
         isLoading = true
-        dataListRickAndMorty = []
         do{
             let data = try await usecase.getSearchCharacter(name: name, page: page)
             isLoading = false
-            dataListRickAndMorty.append(contentsOf: data.results)
+            if(data.results.isEmpty){
+                stopLoad = true
+                print("iesmpty")
+            }else{
+                print("isnotempty")
+                dataListRickAndMorty.append(contentsOf: data.results)
+            }
         } catch {
             isLoading = false
+            stopLoad = true
             print(error)
         }
     }
