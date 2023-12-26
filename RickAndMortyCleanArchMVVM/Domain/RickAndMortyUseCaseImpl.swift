@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
 class RickAndMortyUseCaseImpl: RickAndMortyUsecase {
     private let repository: RickAndMortyRepository
 
@@ -21,12 +23,12 @@ class RickAndMortyUseCaseImpl: RickAndMortyUsecase {
         return try await repository.getListRickAndMorty(page: page)
     }
 
-    func getListEpisodeRickAndMorty(page: Int) async throws -> EpisodeRickAndMortyModel {
-        return try await repository.getListEpisodeRickAndMorty(page: page)
+    func getListEpisodeRickAndMorty(page: Int) -> Observable<EpisodeRickAndMortyModel> {
+        return repository.getListEpisodeRickAndMorty(page: page)
     }
 
-    func getSearchEpisode(name: String, page: Int) async throws -> EpisodeRickAndMortyModel {
-        return try await repository.getSearchEpisode(name: name, page: page)
+    func getSearchEpisode(name: String, page: Int) -> Observable<EpisodeRickAndMortyModel> {
+        return repository.getSearchEpisode(name: name, page: page)
     }
 
     func getSearchCharacter(name: String, page: Int) async throws -> RickAndMortyModel {

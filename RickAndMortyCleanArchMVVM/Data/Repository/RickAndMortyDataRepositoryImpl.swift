@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 class RickAndMortyDataRepositoryImpl: RickAndMortyRepository {
 
     private let datasource: RickAndMortyAPIDatasource
@@ -22,11 +23,13 @@ class RickAndMortyDataRepositoryImpl: RickAndMortyRepository {
         return data
     }
     
-    func getListEpisodeRickAndMorty(page: Int) async throws -> EpisodeRickAndMortyModel {
-        let rawData = try await datasource.getListEpisodeRickAndMorty(page: page)
-        let data = EpisodeRickAndMortyResponseModel.transforms(model: rawData)
+    func getListEpisodeRickAndMorty(page: Int) -> Observable<EpisodeRickAndMortyModel> {
+        let rawData = datasource.getListEpisodeRickAndMorty(page: page).map{ EpisodeRickAndMortyResponseModel.transforms(model: $0) }
         
-        return data
+        return rawData
+//        let data = EpisodeRickAndMortyResponseModel.transforms(model: rawData)
+//        
+//        return data
     }
     
     
@@ -37,11 +40,14 @@ class RickAndMortyDataRepositoryImpl: RickAndMortyRepository {
         return data
     }
     
-    func getSearchEpisode(name: String, page: Int) async throws -> EpisodeRickAndMortyModel {
-        let rawData = try await datasource.getSearchEpisode(name: name, page: page)
-        let data = EpisodeRickAndMortyResponseModel.transforms(model: rawData)
-        
-        return data
+    func getSearchEpisode(name: String, page: Int) -> Observable<EpisodeRickAndMortyModel> {
+        let rawData = datasource.getSearchEpisode(name: name, page: page).map{
+            EpisodeRickAndMortyResponseModel.transforms(model: $0)
+        }
+//        let data = EpisodeRickAndMortyResponseModel.transforms(model: rawData)
+//        
+//        return data
+        return rawData
     }
     
     func getSearchCharacter(name: String, page: Int) async throws -> RickAndMortyModel {

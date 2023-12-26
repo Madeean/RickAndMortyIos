@@ -23,9 +23,7 @@ struct EpisodeView: View {
                         TextField("Search Episode...", text: $searchEpisode).onSubmit {
                             viewModel.episodeListRickAndMorty = []
                             page = 1
-                            Task {
-                                await viewModel.getSearchEpisode(name: searchEpisode, page: page)
-                            }
+                            viewModel.getSearchEpisode(name: searchEpisode, page: page)
                         }
                     }
                     .padding()
@@ -42,12 +40,10 @@ struct EpisodeView: View {
                                     if !viewModel.stopLoad {
                                         if viewModel.shouldLoadData(id: index) {
                                             page += 1
-                                            Task {
-                                                if viewModel.isSearchMode {
-                                                    await viewModel.getSearchEpisode(name: searchEpisode, page: page)
-                                                } else {
-                                                    await viewModel.getListEpisode(page: page)
-                                                }
+                                            if viewModel.isSearchMode {
+                                                viewModel.getSearchEpisode(name: searchEpisode, page: page)
+                                            } else {
+                                                viewModel.getListEpisode(page: page)
                                             }
                                         }
                                     }
@@ -75,7 +71,7 @@ struct EpisodeView: View {
         .onAppear {
             // Call the function to fetch data when the view appears
             Task {
-                await viewModel.getListEpisode(page: 1)
+                viewModel.getListEpisode(page: 1)
             }
         }
     }
