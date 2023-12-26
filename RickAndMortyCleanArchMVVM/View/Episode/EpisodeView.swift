@@ -12,6 +12,7 @@ struct EpisodeView: View {
     @ObservedObject private var viewModel = EpisodeViewModel()
     @State private var page: Int = 1
     @State private var searchEpisode: String = ""
+    @State var isMove: Bool = false
 
     var body: some View {
         NavigationView {
@@ -34,8 +35,8 @@ struct EpisodeView: View {
                     .padding(.horizontal, 20)
 
                     List {
-                        ForEach(Array(viewModel.episodeListRickAndMorty.enumerated()), id: \.offset) {index, character in
-                            ItemEpisodeList(item: character)
+                        ForEach(Array(viewModel.episodeListRickAndMorty.enumerated()), id: \.offset) { index, character in
+                            ItemEpisodeList(item: character, isMove: $isMove)
                                 .listRowSeparator(.hidden)
                                 .onAppear {
                                     if !viewModel.stopLoad {
@@ -51,7 +52,6 @@ struct EpisodeView: View {
                                         }
                                     }
                                 }
-                            
                         }
                     }
                     .listStyle(.plain)
@@ -67,6 +67,8 @@ struct EpisodeView: View {
                     .cornerRadius(20)
                     .shadow(color: .secondary, radius: 20)
                 }
+
+                NavigationLink(destination: DetailEpisodeView(), isActive: $isMove) { EmptyView() }
             }
             .navigationBarTitle(Text("Episode"), displayMode: .inline)
         }
@@ -81,6 +83,7 @@ struct EpisodeView: View {
 
 private struct ItemEpisodeList: View {
     var item: EpisodeModel
+    @Binding var isMove: Bool
     var body: some View {
         ZStack {
             HStack(alignment: .bottom, spacing: 20) {
@@ -92,7 +95,7 @@ private struct ItemEpisodeList: View {
                 Spacer()
 
                 Text("Detail").padding().background(.blue).foregroundColor(.white).cornerRadius(20).onTapGesture {
-                    print("episode press")
+                    isMove.toggle()
                 }
             }.padding().background(.backgroundList)
         }.cornerRadius(20)

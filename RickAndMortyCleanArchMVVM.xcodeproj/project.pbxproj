@@ -27,6 +27,7 @@
 		80A409EE2B32948C004ED0AE /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A409ED2B32948C004ED0AE /* SettingView.swift */; };
 		80B106752B3A877E000793DD /* RickAndMortyUseCaseImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B106742B3A877E000793DD /* RickAndMortyUseCaseImpl.swift */; };
 		80B106782B3A88A1000793DD /* RickAndMortyRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B106772B3A88A1000793DD /* RickAndMortyRepository.swift */; };
+		80B1067C2B3A8ED4000793DD /* DetailEpisodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1067B2B3A8ED4000793DD /* DetailEpisodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		80A409ED2B32948C004ED0AE /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		80B106742B3A877E000793DD /* RickAndMortyUseCaseImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyUseCaseImpl.swift; sourceTree = "<group>"; };
 		80B106772B3A88A1000793DD /* RickAndMortyRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyRepository.swift; sourceTree = "<group>"; };
+		80B1067B2B3A8ED4000793DD /* DetailEpisodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEpisodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		80A409DF2B32902E004ED0AE /* Episode */ = {
 			isa = PBXGroup;
 			children = (
+				80B1067A2B3A8EC3000793DD /* Detail */,
 				80A409E62B329431004ED0AE /* EpisodeView.swift */,
 				80A409E82B329442004ED0AE /* EpisodeViewModel.swift */,
 			);
@@ -200,6 +203,14 @@
 				808784D22B3170F500A78D17 /* RickAndMortyDataSource.swift */,
 			);
 			path = Repository;
+			sourceTree = "<group>";
+		};
+		80B1067A2B3A8EC3000793DD /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				80B1067B2B3A8ED4000793DD /* DetailEpisodeView.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +292,7 @@
 				80650ED62B318C1700B09E3B /* RickAndMortyModel.swift in Sources */,
 				80A409E52B329425004ED0AE /* LocationView.swift in Sources */,
 				80A409E92B329442004ED0AE /* EpisodeViewModel.swift in Sources */,
+				80B1067C2B3A8ED4000793DD /* DetailEpisodeView.swift in Sources */,
 				808784DB2B31721500A78D17 /* ListViewModel.swift in Sources */,
 				80A409E72B329431004ED0AE /* EpisodeView.swift in Sources */,
 				80A409EE2B32948C004ED0AE /* SettingView.swift in Sources */,
