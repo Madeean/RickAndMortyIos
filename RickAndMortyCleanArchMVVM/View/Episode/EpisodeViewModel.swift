@@ -13,10 +13,10 @@ class EpisodeViewModel: ObservableObject {
     @Published var stopLoad = false
 
     private let usecase: RickAndMortyUsecase
-
-    init(usecase: RickAndMortyUsecase = RickAndMortyUsecase()) {
-        self.usecase = usecase
-    }
+    
+    init(usecase: RickAndMortyUsecase = RickAndMortyUseCaseImpl(repository: RickAndMortyDataRepositoryImpl())) {
+            self.usecase = usecase
+        }
 
     @MainActor func getListEpisode(page: Int) async {
         stopLoad = false

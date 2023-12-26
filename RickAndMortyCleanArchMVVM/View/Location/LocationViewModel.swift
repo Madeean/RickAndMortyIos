@@ -13,17 +13,17 @@ class LocationViewModel: ObservableObject{
     @Published var stopLoad = false
 
     private let usecase: RickAndMortyUsecase
-
-    init(usecase: RickAndMortyUsecase = RickAndMortyUsecase()) {
-        self.usecase = usecase
-    }
+    
+    init(usecase: RickAndMortyUsecase = RickAndMortyUseCaseImpl(repository: RickAndMortyDataRepositoryImpl())) {
+            self.usecase = usecase
+        }
 
     @MainActor func getListEpisode(page: Int) async {
         stopLoad = false
         isSearchMode = false
         isLoading = true
         do {
-            let data = try await usecase.getLocationRickAndMorty(page: page)
+            let data = try await usecase.getListLocationRickAndMorty(page: page)
             isLoading = false
             locationListRickAndMorty.append(contentsOf: data.results)
         } catch {

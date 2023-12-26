@@ -6,9 +6,7 @@
 //
 
 import Foundation
-class RickAndMortyAPIRepository: RickAndMortyRepository {
-
-    
+class RickAndMortyDataRepositoryImpl: RickAndMortyRepository {
 
     private let datasource: RickAndMortyAPIDatasource
 
