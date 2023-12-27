@@ -23,7 +23,7 @@ struct CharacterView: View {
                             viewModel.dataListRickAndMorty = []
                             page = 1
                             Task{
-                                await viewModel.getSearchEpisode(name:searchCharacter   ,page:page)
+                                 viewModel.getSearchEpisode(name:searchCharacter   ,page:page)
                             }
                         }
                     }
@@ -46,9 +46,9 @@ struct CharacterView: View {
                                                 
                                                 if viewModel.isSearchMode {
                                                     print("SearchMode \(searchCharacter) - page \(page)")
-                                                    await viewModel.getSearchEpisode(name: searchCharacter, page: page)
+                                                     viewModel.getSearchEpisode(name: searchCharacter, page: page)
                                                 }else{
-                                                    await viewModel.getListRickAndMorty(page: page)
+                                                     viewModel.getListRickAndMorty(page: page)
                                                 }
                                             }
                                         }
@@ -61,7 +61,7 @@ struct CharacterView: View {
                 }.navigationBarTitle("Character", displayMode: .inline)
                     .onAppear {
                         Task {
-                            await viewModel.getListRickAndMorty(page: 1)
+                             viewModel.getListRickAndMorty(page: 1)
                         }
                     }
                 

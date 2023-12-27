@@ -15,12 +15,12 @@ class RickAndMortyUseCaseImpl: RickAndMortyUsecase {
         self.repository = repository
     }
 
-    func getListLocationRickAndMorty(page: Int) async throws -> LocationRickAndMortyModel {
-        return try await repository.getListLocationRickAndMorty(page: page)
+    func getListLocationRickAndMorty(page: Int)  -> Observable<LocationRickAndMortyModel> {
+        return repository.getListLocationRickAndMorty(page: page)
     }
 
-    func getListRickAndMorty(page: Int) async throws -> RickAndMortyModel {
-        return try await repository.getListRickAndMorty(page: page)
+    func getListRickAndMorty(page: Int)  -> Observable<RickAndMortyModel> {
+        return repository.getListRickAndMorty(page: page)
     }
 
     func getListEpisodeRickAndMorty(page: Int) -> Observable<EpisodeRickAndMortyModel> {
@@ -31,11 +31,11 @@ class RickAndMortyUseCaseImpl: RickAndMortyUsecase {
         return repository.getSearchEpisode(name: name, page: page)
     }
 
-    func getSearchCharacter(name: String, page: Int) async throws -> RickAndMortyModel {
-        return try await repository.getSearchCharacter(name: name, page: page)
+    func getSearchCharacter(name: String, page: Int)  -> Observable<RickAndMortyModel> {
+        return repository.getSearchCharacter(name: name, page: page)
     }
 
-    func getSearchLocation(name: String, page: Int) async throws -> LocationRickAndMortyModel {
-        return try await repository.getSearchLocation(name: name, page: page)
+    func getSearchLocation(name: String, page: Int)  -> Observable<LocationRickAndMortyModel> {
+        return repository.getSearchLocation(name: name, page: page)
     }
 }

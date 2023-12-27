@@ -9,11 +9,11 @@ import Foundation
 import RxSwift
 
 protocol RickAndMortyDatasource {
-    func getListRickAndMorty(page:Int) async throws -> RickAndMortyResponseModel
+    func getListRickAndMorty(page:Int)  -> Observable<RickAndMortyResponseModel>
     func getListEpisodeRickAndMorty(page:Int) -> Observable<EpisodeRickAndMortyResponseModel>
-    func getLocationRickAndMorty(page:Int) async throws -> LocationRickAndMortyResponseModel
+    func getLocationRickAndMorty(page:Int)  -> Observable<LocationRickAndMortyResponseModel>
     
     func getSearchEpisode(name:String, page:Int) -> Observable<EpisodeRickAndMortyResponseModel>
-    func getSearchCharacter(name:String, page:Int) async throws -> RickAndMortyResponseModel
-    func getSearchLocation(name:String, page:Int) async throws -> LocationRickAndMortyResponseModel
+    func getSearchCharacter(name:String, page:Int)  -> Observable<RickAndMortyResponseModel>
+    func getSearchLocation(name:String, page:Int)  -> Observable<LocationRickAndMortyResponseModel>
 }

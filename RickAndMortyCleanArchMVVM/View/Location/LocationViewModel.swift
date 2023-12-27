@@ -6,55 +6,62 @@
 //
 
 import Foundation
-class LocationViewModel: ObservableObject{
+import RxSwift
+
+class LocationViewModel: ObservableObject {
+    private let disposeBag = DisposeBag()
+
     @Published var locationListRickAndMorty: [LocationModel] = []
     @Published var isLoading = false
     @Published var isSearchMode = false
     @Published var stopLoad = false
 
     private let usecase: RickAndMortyUsecase
-    
-    init(usecase: RickAndMortyUsecase = RickAndMortyUseCaseImpl(repository: RickAndMortyDataRepositoryImpl())) {
-            self.usecase = usecase
-        }
 
-    @MainActor func getListEpisode(page: Int) async {
+    init(usecase: RickAndMortyUsecase = RickAndMortyUseCaseImpl(repository: RickAndMortyDataRepositoryImpl())) {
+        self.usecase = usecase
+    }
+
+    @MainActor func getListEpisode(page: Int) {
         stopLoad = false
         isSearchMode = false
         isLoading = true
-        do {
-            let data = try await usecase.getListLocationRickAndMorty(page: page)
-            isLoading = false
-            locationListRickAndMorty.append(contentsOf: data.results)
-        } catch {
-            stopLoad = true
-            isLoading = false
-            print(error)
-        }
+        usecase.getListLocationRickAndMorty(page: page)
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                self.locationListRickAndMorty.append(contentsOf: result.results)
+            } onError: { error in
+                self.stopLoad = true
+                self.isLoading = false
+                print(error)
+            } onCompleted: {
+                self.isLoading = false
+            }.disposed(by: disposeBag)
     }
 
     func shouldLoadData(id: Int) -> Bool {
         return id == locationListRickAndMorty.count - 2
     }
-    
-    @MainActor func getSearchLocation(name:String, page:Int) async {
+
+    @MainActor func getSearchLocation(name: String, page: Int) {
         stopLoad = false
         isSearchMode = true
         isLoading = true
-        do{
-            let data = try await usecase.getSearchLocation(name: name, page: page)
-            isLoading = false
-            if(data.results.isEmpty){
-                stopLoad = true
-                print("iesmpty")
-            }else{
-                print("isnotempty")
-                locationListRickAndMorty.append(contentsOf: data.results)
-            }
-        } catch {
-            isLoading = false
-            stopLoad = true
-            print(error)
-        }
+
+        usecase.getSearchLocation(name: name, page: page)
+            .observe(on: MainScheduler.instance)
+            .subscribe { result in
+                if result.results.isEmpty {
+                    self.stopLoad = true
+                } else {
+                    self.locationListRickAndMorty.append(contentsOf: result.results)
+                }
+            } onError: { error in
+                self.isLoading = false
+                self.stopLoad = true
+                print(error)
+            } onCompleted: {
+                self.isLoading = false
+            }.disposed(by: disposeBag)
     }
 }

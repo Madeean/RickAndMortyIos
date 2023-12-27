@@ -22,7 +22,7 @@ struct LocationView: View {
                             viewModel.locationListRickAndMorty = []
                             page = 1
                             Task{
-                                await viewModel.getSearchLocation(name:searchLocation, page:page)
+                                 viewModel.getSearchLocation(name:searchLocation, page:page)
                             }
                         }
                     }
@@ -48,10 +48,10 @@ struct LocationView: View {
                                         Task{
                                             if viewModel.isSearchMode {
                                                 
-                                                await viewModel.getSearchLocation(name: searchLocation, page: page)
+                                                 viewModel.getSearchLocation(name: searchLocation, page: page)
                                                 
                                             } else{
-                                                await viewModel.getListEpisode(page:page)
+                                                 viewModel.getListEpisode(page:page)
                                             }
                                         }
                                         
@@ -77,7 +77,7 @@ struct LocationView: View {
         .onAppear {
             // Call the function to fetch data when the view appears
             Task {
-                await viewModel.getListEpisode(page: 1)
+                 viewModel.getListEpisode(page: 1)
             }
         }
     }

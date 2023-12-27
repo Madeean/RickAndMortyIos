@@ -7,7 +7,6 @@
 
 import Foundation
 import RxSwift
-import SwiftUI
 
 class EpisodeViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
@@ -64,21 +63,6 @@ class EpisodeViewModel: ObservableObject {
             } onCompleted: {
                 self.isLoading = false
             }.disposed(by: disposeBag)
-        
-//        do {
-//            let data = try await usecase.getSearchEpisode(name: name, page: page)
-//            isLoading = false
-//            if data.results.isEmpty {
-//                stopLoad = true
-//                print("iesmpty")
-//            } else {
-//                print("isnotempty")
-//                episodeListRickAndMorty.append(contentsOf: data.results)
-//            }
-//        } catch {
-//            isLoading = false
-//            stopLoad = true
-//            print(error)
-//        }
+
     }
 }
