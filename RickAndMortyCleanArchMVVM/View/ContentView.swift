@@ -52,6 +52,8 @@ struct indicatorView: UIViewRepresentable{
     }
 }
 
+
+
 #Preview {
     ContentView()
 }

@@ -8,8 +8,28 @@
 import SwiftUI
 
 struct DetailEpisodeView: View {
+    @Environment(\.dismiss) var dismiss
     var body: some View {
-        Text("Hello, World!")
+        NavigationStack {
+            ZStack {
+            }
+            .navigationBarTitle("Detail Episode", displayMode: .inline)
+            .navigationBarItems(leading: NavigationBackTrailing {
+                dismiss()
+            }
+            )
+            .toolbarBackground(Color.green, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+        }
+    }
+}
+
+struct NavigationBackTrailing: View {
+    @State var dismiss: () -> Void
+    var body: some View {
+        Image(systemName: "arrow.backward").onTapGesture {
+            dismiss()
+        }
     }
 }
 

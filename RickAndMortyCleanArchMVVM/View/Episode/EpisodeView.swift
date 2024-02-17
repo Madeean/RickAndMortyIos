@@ -64,7 +64,7 @@ struct EpisodeView: View {
                     .shadow(color: .secondary, radius: 20)
                 }
 
-                NavigationLink(destination: DetailEpisodeView(), isActive: $isMove) { EmptyView() }
+                NavigationLink(destination: DetailEpisodeView().navigationBarBackButtonHidden(true), isActive: $isMove) { EmptyView() }
             }
             .navigationBarTitle(Text("Episode"), displayMode: .inline)
         }
